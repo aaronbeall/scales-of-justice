@@ -1,5 +1,5 @@
 import { PageLayout } from '../components/PageLayout/PageLayout';
-import { Grid, List, ListItem, ListItemText, Typography, Badge, Paper, Box } from '@mui/material';
+import { Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Badge, Paper, Box, Checkbox } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useData } from '../context/DataContext';
 import { Entry } from '../types';
@@ -95,9 +95,8 @@ export function Data() {
                 <Typography variant="h6" sx={{ p: 2, pb: 1 }}>Tags</Typography>
                 <List dense sx={{ py: 0 }}>
                   {uniqueTags.map(tag => (
-                    <ListItem 
+                    <ListItemButton 
                       key={tag}
-                      disablePadding
                       selected={selectedTags.includes(tag)}
                       onClick={() => {
                         setSelectedTags(prev => 
@@ -106,23 +105,15 @@ export function Data() {
                             : [...prev, tag]
                         );
                       }}
-                      sx={{
-                        py: 1,
-                        px: 2,
-                        '&.MuiListItem-root.Mui-selected': {
-                          backgroundColor: 'primary.main',
-                          color: 'primary.contrastText',
-                          borderLeft: '4px solid',
-                          borderColor: 'secondary.main',
-                          '&:hover': {
-                            backgroundColor: 'primary.dark',
-                          }
-                        },
-                        '&:hover': {
-                          backgroundColor: 'action.hover',
-                        }
-                      }}
                     >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={selectedTags.includes(tag)}
+                          tabIndex={-1}
+                          disableRipple
+                        />
+                      </ListItemIcon>
                       <ListItemText 
                         primary={
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -135,7 +126,7 @@ export function Data() {
                           </Box>
                         }
                       />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                 </List>
               </Paper>
@@ -145,9 +136,8 @@ export function Data() {
                 <Typography variant="h6" sx={{ p: 2, pb: 1 }}>Metrics</Typography>
                 <List dense sx={{ py: 0 }}>
                   {unitStats.map(({ unit, count }) => (
-                    <ListItem
+                    <ListItemButton
                       key={unit}
-                      disablePadding
                       selected={selectedMetrics.includes(unit)}
                       onClick={() => {
                         setSelectedMetrics(prev =>
@@ -156,23 +146,15 @@ export function Data() {
                             : [...prev, unit]
                         );
                       }}
-                      sx={{
-                        py: 1,
-                        px: 2,
-                        '&.MuiListItem-root.Mui-selected': {
-                          backgroundColor: 'primary.main',
-                          color: 'primary.contrastText',
-                          borderLeft: '4px solid',
-                          borderColor: 'secondary.main',
-                          '&:hover': {
-                            backgroundColor: 'primary.dark',
-                          }
-                        },
-                        '&:hover': {
-                          backgroundColor: 'action.hover',
-                        }
-                      }}
                     >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={selectedMetrics.includes(unit)}
+                          tabIndex={-1}
+                          disableRipple
+                        />
+                      </ListItemIcon>
                       <ListItemText 
                         primary={
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -185,7 +167,7 @@ export function Data() {
                           </Box>
                         }
                       />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                 </List>
               </Paper>

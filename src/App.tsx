@@ -45,7 +45,7 @@ function App() {
                 </IconButton>
                 <Box component="img" src="/logo.svg" sx={{ height: 32, width: 32, mr: 2 }} />
                 <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-                  Data Tracker
+                  Scales <i>of</i> Justice
                 </Typography>
                 <IconButton
                   sx={{ ml: 1 }}

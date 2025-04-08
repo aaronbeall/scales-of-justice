@@ -1,0 +1,25 @@
+#root {
+  width: 100%;
+}
+
+.input-section {
+  width: 100%;
+  max-width: 100%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--mui-palette-background-paper);
+  border: 1px solid var(--mui-palette-divider);
+  color: var(--mui-palette-text-primary);
+  font-family: inherit;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--mui-palette-primary-main);
+}

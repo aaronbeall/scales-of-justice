@@ -1,0 +1,43 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="retrowave" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff00cc"/>
+      <stop offset="100%" stop-color="#00ffff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#0a0014"/>
+
+  <!-- Central post -->
+  <line x1="32" y1="10" x2="32" y2="48" stroke="url(#retrowave)" stroke-width="3"/>
+  <circle cx="32" cy="10" r="3" fill="url(#retrowave)" />
+
+  <!-- Angled arms -->
+  <line x1="32" y1="20" x2="16" y2="16" stroke="url(#retrowave)" stroke-width="2"/>
+  <line x1="32" y1="20" x2="48" y2="24" stroke="url(#retrowave)" stroke-width="2"/>
+
+  <!-- Chains -->
+  <line x1="16" y1="16" x2="13" y2="26" stroke="url(#retrowave)" stroke-width="1.5"/>
+  <line x1="16" y1="16" x2="19" y2="26" stroke="url(#retrowave)" stroke-width="1.5"/>
+  <line x1="48" y1="24" x2="45" y2="34" stroke="url(#retrowave)" stroke-width="1.5"/>
+  <line x1="48" y1="24" x2="51" y2="34" stroke="url(#retrowave)" stroke-width="1.5"/>
+
+  <!-- Scale plates -->
+  <ellipse cx="16" cy="28" rx="6" ry="2" fill="none" stroke="url(#retrowave)" stroke-width="2"/>
+  <ellipse cx="48" cy="36" rx="6" ry="2" fill="none" stroke="url(#retrowave)" stroke-width="2"/>
+
+  <!-- Data bars -->
+  <g fill="#ffffff">
+    <!-- Left plate -->
+    <rect x="12.5" y="22" width="2.5" height="6" rx="0.5"/>
+    <rect x="15.5" y="20" width="2.5" height="8" rx="0.5"/>
+    <rect x="18.5" y="21" width="2.5" height="7" rx="0.5"/>
+
+    <!-- Right plate -->
+    <rect x="44.5" y="30" width="2.5" height="6" rx="0.5"/>
+    <rect x="47.5" y="29" width="2.5" height="7" rx="0.5"/>
+    <rect x="50.5" y="28" width="2.5" height="8" rx="0.5"/>
+  </g>
+
+  <!-- Base -->
+  <rect x="26" y="48" width="12" height="4" rx="1" fill="url(#retrowave)"/>
+</svg>

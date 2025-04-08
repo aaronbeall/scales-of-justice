@@ -6,7 +6,7 @@ import { FilterList } from '../components/FilterList';
 import { Entry } from '../types';
 import { useState } from 'react';
 
-export function Data() {
+export function DataView() {
   const { entries } = useData();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedMetrics, setSelectedMetrics] = useState<string[]>([]);

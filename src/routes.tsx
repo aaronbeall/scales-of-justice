@@ -1,31 +1,31 @@
-import { Home } from './pages/Home';
-import { Timeline } from './pages/Timeline';
-import { Charts } from './pages/Charts';
-import { Calendar } from './pages/Calendar';
-import { Data } from './pages/Data';
+import { HomeView } from './pages/HomeView';
+import { TimelineView } from './pages/TimelineView';
+import { ChartsView } from './pages/ChartsView';
+import { CalendarView } from './pages/CalendarView';
+import { DataView } from './pages/DataView';
 import { Typography } from '@mui/material';
 import { PageLayout } from './components/PageLayout';
 
 export const routes = [
   {
     path: '/',
-    element: <Home />,
+    element: <HomeView />,
   },
   {
     path: '/timeline',
-    element: <Timeline />,
+    element: <TimelineView />,
   },
   {
     path: '/charts',
-    element: <Charts />,
+    element: <ChartsView />,
   },
   {
     path: '/calendar',
-    element: <Calendar />,
+    element: <CalendarView />,
   },
   {
     path: '/data',
-    element: <Data />,
+    element: <DataView />,
   },
   {
     path: '/settings',

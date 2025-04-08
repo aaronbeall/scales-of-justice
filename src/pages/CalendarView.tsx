@@ -1,7 +1,7 @@
 import { PageLayout } from '../components/PageLayout';
 import { Box, Typography } from '@mui/material';
 
-export function Calendar() {
+export function CalendarView() {
   return (
     <PageLayout>
       <Box>

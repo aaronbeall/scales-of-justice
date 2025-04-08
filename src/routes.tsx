@@ -4,7 +4,7 @@ import { Charts } from './pages/Charts';
 import { Calendar } from './pages/Calendar';
 import { Data } from './pages/Data';
 import { Typography } from '@mui/material';
-import { PageLayout } from './components/PageLayout/PageLayout';
+import { PageLayout } from './components/PageLayout';
 
 export const routes = [
   {

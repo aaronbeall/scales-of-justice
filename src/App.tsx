@@ -7,6 +7,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { SideMenu } from './components/SideMenu';
 import { routes } from './routes';
 import { DataProvider } from './context/DataContext';
+import { TimeFrameProvider } from './context/TimeFrameContext';
+import { TimeFramePicker } from './components/TimeFramePicker';
 import './App.css';
 
 function App() {
@@ -29,62 +31,65 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <DataProvider>
-          <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-            <CssBaseline />
-            
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  edge="start"
-                  onClick={() => setDrawerOpen(!drawerOpen)}
-                  sx={{ mr: 2, display: { md: 'none' } }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Box component="img" src="/logo.svg" sx={{ height: 32, width: 32, mr: 2 }} />
-                <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-                  Scales <i>of</i> Justice
-                </Typography>
-                <IconButton
-                  sx={{ ml: 1 }}
-                  onClick={() => setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))}
-                  color="inherit"
-                >
-                  {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton>
-              </Toolbar>
-            </AppBar>
+        <TimeFrameProvider>
+          <DataProvider>
+            <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+              <CssBaseline />
+              
+              <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                <Toolbar>
+                  <IconButton
+                    color="inherit"
+                    edge="start"
+                    onClick={() => setDrawerOpen(!drawerOpen)}
+                    sx={{ mr: 2, display: { md: 'none' } }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Box component="img" src="/logo.svg" sx={{ height: 32, width: 32, mr: 2 }} />
+                  <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                    Scales <i>of</i> Justice
+                  </Typography>
+                  <TimeFramePicker />
+                  <IconButton
+                    sx={{ ml: 1 }}
+                    onClick={() => setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))}
+                    color="inherit"
+                  >
+                    {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                  </IconButton>
+                </Toolbar>
+              </AppBar>
 
-            <SideMenu
-              open={drawerOpen}
-              onClose={() => setDrawerOpen(false)}
-            />
+              <SideMenu
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+              />
 
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                p: { xs: 2, md: 3 },
-                width: '100%',
-                mt: 8,
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-            >
-              <Routes>
-                {routes.map((route) => (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                  />
-                ))}
-              </Routes>
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  p: { xs: 2, md: 3 },
+                  width: '100%',
+                  mt: 8,
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
+                <Routes>
+                  {routes.map((route) => (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  ))}
+                </Routes>
+              </Box>
             </Box>
-          </Box>
-        </DataProvider>
+          </DataProvider>
+        </TimeFrameProvider>
       </ThemeProvider>
     </BrowserRouter>
   );

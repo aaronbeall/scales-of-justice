@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PageLayout } from '../components/PageLayout/PageLayout';
+import { PageLayout } from '../components/PageLayout';
 import { TagSuggestions } from '../components/TagSuggestions';
 import { useData } from '../context/DataContext';
 

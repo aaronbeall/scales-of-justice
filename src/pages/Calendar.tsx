@@ -1,4 +1,4 @@
-import { PageLayout } from '../components/PageLayout/PageLayout';
+import { PageLayout } from '../components/PageLayout';
 import { Box, Typography } from '@mui/material';
 
 export function Calendar() {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Box, CssBaseline, IconButton, AppBar, Toolbar, Typography, useMediaQuery, createTheme, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,23 +9,31 @@ import { routes } from './routes';
 import { DataProvider } from './context/DataContext';
 import { TimeFrameProvider } from './context/TimeFrameContext';
 import { TimeFramePicker } from './components/TimeFramePicker';
+import { ThemeSelector } from './components/ThemeSelector';
 import './App.css';
+import { getThemeOptions, ThemeName } from './utils/themes';
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = useState<'light' | 'dark'>(
-    localStorage.getItem('theme') as 'light' | 'dark' || (prefersDarkMode ? 'dark' : 'light')
+    localStorage.getItem('themeMode') as 'light' | 'dark' || (prefersDarkMode ? 'dark' : 'light')
+  );
+  const [themeName, setThemeName] = useState<ThemeName>(
+    localStorage.getItem('themeName') as ThemeName || 'modern'
   );
 
+  useEffect(() => {
+    localStorage.setItem('themeMode', mode);
+  }, [mode]);
+
+  useEffect(() => {
+    localStorage.setItem('themeName', themeName);
+  }, [themeName]);
+
   const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
+    () => createTheme(getThemeOptions(themeName, mode)),
+    [themeName, mode]
   );
 
   return (
@@ -51,6 +59,10 @@ function App() {
                     Scales <i>of</i> Justice
                   </Typography>
                   <TimeFramePicker />
+                  <ThemeSelector
+                    currentTheme={themeName}
+                    onThemeChange={setThemeName}
+                  />
                   <IconButton
                     sx={{ ml: 1 }}
                     onClick={() => setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))}

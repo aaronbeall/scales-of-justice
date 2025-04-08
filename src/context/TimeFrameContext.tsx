@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { getDateRange } from '../utils/timeframe';
 
 export type TimeFrame = {
   type: 'today' | 'week' | 'month' | 'year' | 'ytd' | 'custom';
@@ -9,27 +10,10 @@ export type TimeFrame = {
 type TimeFrameContextType = {
   timeFrame: TimeFrame;
   setTimeFrame: (frame: TimeFrame) => void;
+  dateRange: { start: Date; end: Date };
 };
 
 const TimeFrameContext = createContext<TimeFrameContextType | undefined>(undefined);
-
-const getStartDate = (type: TimeFrame['type']): Date => {
-  const now = new Date();
-  switch (type) {
-    case 'today':
-      return new Date(now.setHours(0, 0, 0, 0));
-    case 'week':
-      return new Date(now.setDate(now.getDate() - 7));
-    case 'month':
-      return new Date(now.setMonth(now.getMonth() - 1));
-    case 'year':
-      return new Date(now.setFullYear(now.getFullYear() - 1));
-    case 'ytd':
-      return new Date(now.getFullYear(), 0, 1);
-    default:
-      return now;
-  }
-};
 
 export function TimeFrameProvider({ children }: { children: ReactNode }) {
   const [timeFrame, setTimeFrame] = useState<TimeFrame>(() => {
@@ -49,8 +33,10 @@ export function TimeFrameProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('timeFrame', JSON.stringify(timeFrame));
   }, [timeFrame]);
 
+  const dateRange = useMemo(() => getDateRange(timeFrame), [timeFrame]);
+
   return (
-    <TimeFrameContext.Provider value={{ timeFrame, setTimeFrame }}>
+    <TimeFrameContext.Provider value={{ timeFrame, setTimeFrame, dateRange }}>
       {children}
     </TimeFrameContext.Provider>
   );

@@ -5,18 +5,22 @@ import { useData } from '../context/DataContext';
 import { FilterList } from '../components/FilterList';
 import { Entry } from '../types';
 import { useState } from 'react';
+import { useTimeFrame } from '../context/TimeFrameContext';
+import { isWithinInterval } from 'date-fns';
 
 export function DataView() {
   const { entries } = useData();
+  const { dateRange } = useTimeFrame();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedMetrics, setSelectedMetrics] = useState<string[]>([]);
 
   const filteredEntries = entries.filter(entry => {
+    const matchesTimeFrame = isWithinInterval(entry.timestamp, dateRange);
     const matchesTags = selectedTags.length === 0 || 
       selectedTags.every(tag => entry.tags.includes(tag));
     const matchesMetrics = selectedMetrics.length === 0 ||
       selectedMetrics.every(unit => entry.metrics.some(m => m.unit === unit));
-    return matchesTags && matchesMetrics;
+    return matchesTimeFrame && matchesTags && matchesMetrics;
   });
 
   const columns: GridColDef<Entry>[] = [

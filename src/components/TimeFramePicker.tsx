@@ -17,7 +17,7 @@ const timeFrameOptions: { label: string; value: TimeFrame['type'] }[] = [
 ];
 
 export function TimeFramePicker() {
-  const { timeFrame, setTimeFrame } = useTimeFrame();
+  const { timeFrame, setTimeFrame, dateRange } = useTimeFrame();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
   const [customStart, setCustomStart] = useState<Date | null>(null);
@@ -33,6 +33,8 @@ export function TimeFramePicker() {
 
   const handleSelect = (type: TimeFrame['type']) => {
     if (type === 'custom') {
+      setCustomStart(dateRange.start);
+      setCustomEnd(dateRange.end);
       setCustomDialogOpen(true);
     } else {
       setTimeFrame({ type });
@@ -45,6 +47,12 @@ export function TimeFramePicker() {
       setTimeFrame({ type: 'custom', start: customStart, end: customEnd });
     }
     setCustomDialogOpen(false);
+  };
+
+  const handleCloseDialog = () => {
+    setCustomDialogOpen(false);
+    setCustomStart(null);
+    setCustomEnd(null);
   };
 
   const getTimeFrameLabel = () => {
@@ -79,7 +87,7 @@ export function TimeFramePicker() {
         ))}
       </Menu>
 
-      <Dialog open={customDialogOpen} onClose={() => setCustomDialogOpen(false)}>
+      <Dialog open={customDialogOpen} onClose={handleCloseDialog}>
         <DialogTitle>Custom Time Frame</DialogTitle>
         <DialogContent>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -101,7 +109,7 @@ export function TimeFramePicker() {
           </LocalizationProvider>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setCustomDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
           <Button onClick={handleCustomSave} variant="contained">Save</Button>
         </DialogActions>
       </Dialog>

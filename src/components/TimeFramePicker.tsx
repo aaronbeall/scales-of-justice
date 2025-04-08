@@ -8,6 +8,7 @@ import { useTimeFrame, TimeFrame } from '../context/TimeFrameContext';
 import { format } from 'date-fns';
 
 const timeFrameOptions: { label: string; value: TimeFrame['type'] }[] = [
+  { label: 'All Time', value: 'all' },
   { label: 'Today', value: 'today' },
   { label: 'Last Week', value: 'week' },
   { label: 'Last Month', value: 'month' },

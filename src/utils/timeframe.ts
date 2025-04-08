@@ -23,6 +23,8 @@ export const getDateRange = (timeFrame: TimeFrame): { start: Date; end: Date } =
       return { start: startOfDay(subDays(now, 365)), end };
     case 'ytd':
       return { start: startOfYear(now), end };
+    case 'all':
+      return { start: new Date(0), end };
     default:
       return { start: startOfDay(subDays(now, 30)), end };
   }

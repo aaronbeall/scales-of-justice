@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode, useMemo } fr
 import { getDateRange } from '../utils/timeframe';
 
 export type TimeFrame = {
-  type: 'today' | 'week' | 'month' | 'year' | 'ytd' | 'custom';
+  type: 'today' | 'week' | 'month' | 'year' | 'ytd' | 'custom' | 'all';
   start?: Date;
   end?: Date;
 };

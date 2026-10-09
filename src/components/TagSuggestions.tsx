@@ -1,30 +1,48 @@
 import { useState, useEffect } from 'react';
-import { Typography, Chip, Stack } from '@mui/material';
+import { Typography, Chip, Stack, Popover, Paper } from '@mui/material';
 
 interface TagSuggestionsProps {
   text: string;
   existingTags: string[];
   onSelect: (tag: string) => void;
+  cursorPosition: { x: number; y: number } | null;
 }
 
-export function TagSuggestions({ text, existingTags, onSelect }: TagSuggestionsProps) {
+const commonCategories = {
+  general: [
+    'weight', 'exercise', 'food', 'sleep', 'mood', 'health',
+    'work', 'study', 'finance', 'habits'
+  ],
+  metrics: {
+    'weight': ['lbs', 'kg'],
+    'distance': ['mi', 'km', 'meters'],
+    'steps': ['steps'],
+    'duration': ['min', 'hours'],
+    'reps': ['reps', 'sets'],
+    'calories': ['cal', 'kcal'],
+    'money': ['usd', 'dollars', 'cents'],
+    'sleep': ['hours'],
+  }
+};
+
+export function TagSuggestions({ text, existingTags, onSelect, cursorPosition }: TagSuggestionsProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
-    const commonCategories = [
-      'weight', 'exercise', 'food', 'sleep', 'mood', 'health',
-      'work', 'study', 'finance', 'habits'
-    ];
-
     const words = text.toLowerCase().split(/\s+/);
-    const matchedCategories = commonCategories.filter(category =>
+    const textTags = Array.from(text.matchAll(/#(\w+)/g)).map(match => match[1]);
+
+    const matchedCategories = commonCategories.general.filter(category =>
       words.some(word => word.includes(category))
     );
 
-    const textTags = Array.from(text.matchAll(/#(\w+)/g)).map(match => match[1]);
+    const matchedMetrics = Object.entries(commonCategories.metrics)
+      .filter(([category]) => words.some(word => word.includes(category)))
+      .flatMap(([_, units]) => units);
 
     const uniqueSuggestions = [...new Set([
       ...matchedCategories,
+      ...matchedMetrics,
       ...existingTags.filter(tag => 
         !textTags.includes(tag) && 
         text.toLowerCase().includes(tag.toLowerCase())
@@ -34,26 +52,38 @@ export function TagSuggestions({ text, existingTags, onSelect }: TagSuggestionsP
     setSuggestions(uniqueSuggestions.slice(0, 5));
   }, [text, existingTags]);
 
-  if (suggestions.length === 0) return null;
+  if (suggestions.length === 0 || !cursorPosition) return null;
 
   return (
-    <Stack spacing={1} sx={{ mt: 2 }}>
-      <Typography variant="body2" color="text.secondary">
-        Suggested tags:
-      </Typography>
-      <Stack direction="row" spacing={1} flexWrap="wrap">
-        {suggestions.map(tag => (
-          <Chip
-            key={tag}
-            label={`#${tag}`}
-            onClick={() => onSelect(tag)}
-            color="primary"
-            variant="outlined"
-            size="small"
-            sx={{ cursor: 'pointer' }}
-          />
-        ))}
-      </Stack>
-    </Stack>
+    <Popover
+      open={suggestions.length > 0}
+      anchorReference="anchorPosition"
+      anchorPosition={{ top: cursorPosition.y + 24, left: cursorPosition.x }}
+      disableAutoFocus
+      disableEnforceFocus
+      disableRestoreFocus
+      sx={{ pointerEvents: 'none' }}
+    >
+      <Paper sx={{ p: 1, pointerEvents: 'none' }}>
+        <Stack spacing={1}>
+          <Typography variant="caption" color="text.secondary">
+            Suggested tags:
+          </Typography>
+          <Stack direction="row" spacing={1} flexWrap="wrap">
+            {suggestions.map(tag => (
+              <Chip
+                key={tag}
+                label={`#${tag}`}
+                onClick={() => onSelect(tag)}
+                color="primary"
+                variant="outlined"
+                size="small"
+                sx={{ cursor: 'pointer', pointerEvents: 'auto' }}
+              />
+            ))}
+          </Stack>
+        </Stack>
+      </Paper>
+    </Popover>
   );
 }
